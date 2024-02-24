@@ -2,8 +2,4 @@ OTTO-TODO:
 
 - continuous conversations until "goodbye"; migrate to Assistants API
 
-- play audio without default media player
-
-- wake word implementation
-
 - hardware implementation, perhaps onto my old phone

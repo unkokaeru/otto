@@ -1,9 +1,16 @@
 """A digital assistant named Otto."""
 
+import speech_recognition as sr
 from openai import OpenAI
 
-from config.cfg import ELEVEN_API_KEY, ELEVEN_VOICE_ID, OPENAI_API_KEY
-from core.speech_recognition import microphone_input
+from config.cfg import (
+    ELEVEN_API_KEY,
+    ELEVEN_VOICE_ID,
+    OPENAI_API_KEY,
+    WAKE_WORD,
+    DURATION,
+)
+from core.speech_recognition import microphone_input, listen_for_wake_word
 from integrations.eleven_labs import text_to_speech
 from integrations.openai import prompt_gpt_turbo, speech_to_text
 from utils.logger import get_logger
@@ -18,6 +25,17 @@ def main() -> None:
     # Initialise the logger and OpenAI client
     ai_client = OpenAI(api_key=OPENAI_API_KEY)
     logger = get_logger()
+    recogniser = sr.Recognizer()
+
+    # Listen for the wake word
+    wake_word_detected = listen_for_wake_word(logger, recogniser, WAKE_WORD, DURATION)
+
+    if not wake_word_detected:
+        logger.error("The wake word was not detected.")
+        return
+
+    # Notify the user that the wake word was detected
+    logger.info("The wake word was detected. Please speak.")
 
     # Record audio from the microphone
     user_audio_path = microphone_input(logger)
