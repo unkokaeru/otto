@@ -1,9 +1,10 @@
 """ElevenLabs API integration module."""
 
-import os
 from pathlib import Path
 
 import requests
+from pydub import AudioSegment
+from pydub.playback import play
 
 
 def text_to_speech(
@@ -37,4 +38,6 @@ def text_to_speech(
             if chunk:
                 f.write(chunk)
 
-    os.system(f"start {output_path}")
+    # Play the audio
+    audio = AudioSegment.from_mp3(output_path)
+    play(audio)
