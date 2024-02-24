@@ -23,5 +23,5 @@ ELEVEN_API_KEY = os.getenv("ELEVEN_API_KEY")
 ELEVEN_VOICE_ID = "rftVusAekuzb5nbS3Kc4"
 
 # Wake Word Configuration
-WAKE_WORD = "hey otto"
+WAKE_WORDS = ["hey otto", "hey auto", "toyota", "otto", "auto", "hilton"]
 DURATION = 3

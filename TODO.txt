@@ -1,5 +1,5 @@
 OTTO-TODO:
 
-- continuous conversations until "goodbye"; migrate to Assistants API
+- migrate to Assistants API
 
 - hardware implementation, perhaps onto my old phone
