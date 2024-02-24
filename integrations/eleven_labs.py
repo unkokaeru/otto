@@ -9,13 +9,13 @@ from pydub.playback import play
 
 def text_to_speech(
     logger, ELEVEN_API_KEY: str, ELEVEN_VOICE_ID: str, text: str
-) -> None:
+) -> Path:
     """
     Convert text to speech using the ElevenLabs API.
     :param ELEVEN_API_KEY: The API key for the ElevenLabs API.
     :param ELEVEN_VOICE_ID: The ID of the voice to use for the speech.
     :param text: The text to be converted to speech.
-    :return: None
+    :return: The path to the output audio file.
     """
 
     CHUNK_SIZE = 1024
@@ -41,3 +41,5 @@ def text_to_speech(
     # Play the audio
     audio = AudioSegment.from_mp3(output_path)
     play(audio)
+
+    return output_path

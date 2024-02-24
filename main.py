@@ -65,15 +65,18 @@ def main() -> None:
         logger.info(f"Response: {response}")
 
         # Convert the response to speech
-        text_to_speech(logger, ELEVEN_API_KEY, ELEVEN_VOICE_ID, response)
+        otto_audio_path = text_to_speech(
+            logger, ELEVEN_API_KEY, ELEVEN_VOICE_ID, response
+        )
 
-        # Attempt to delete the audio files
-        try:
-            user_audio_path.unlink()
-        except PermissionError:
-            logger.error(
-                "The audio file(s) could not be deleted. Please delete them manually."
-            )
+    # Attempt to delete the audio files
+    try:
+        user_audio_path.unlink()
+        otto_audio_path.unlink()
+    except PermissionError:
+        logger.error(
+            "The audio file(s) could not be deleted. Please delete them manually."
+        )
 
 
 if __name__ == "__main__":

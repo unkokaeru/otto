@@ -9,6 +9,15 @@ from openai import OpenAI
 def prompt_assistant(
     logger, client: OpenAI, thread, ASSISTANT_ID: str, USER_NAME: str, text: str
 ) -> str:
+    """
+    Prompt the OpenAI Assistants API with a user message, and return the response.
+    :param client: The OpenAI client.
+    :param thread: The thread to prompt.
+    :param ASSISTANT_ID: The ID of the assistant to prompt.
+    :param USER_NAME: The name of the user.
+    :param text: The user's message to respond to.
+    """
+
     message = client.beta.threads.messages.create(
         thread_id=thread.id, role="user", content=text
     )
