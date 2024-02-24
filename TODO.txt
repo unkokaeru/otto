@@ -1,5 +1,3 @@
 OTTO-TODO:
 
-- migrate to Assistants API
-
-- hardware implementation, perhaps onto my old phone
+- app implementation

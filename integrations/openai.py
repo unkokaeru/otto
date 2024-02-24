@@ -6,6 +6,31 @@ from typing import cast
 from openai import OpenAI
 
 
+def prompt_assistant(
+    logger, client: OpenAI, thread, ASSISTANT_ID: str, USER_NAME: str, text: str
+) -> str:
+    message = client.beta.threads.messages.create(
+        thread_id=thread.id, role="user", content=text
+    )
+
+    logger.info(f"Message added to thread: {message}")
+
+    run = client.beta.threads.runs.create(
+        thread_id=thread.id,
+        assistant_id=ASSISTANT_ID,
+        instructions=f"The user's name is {USER_NAME}.",
+    )
+
+    while run.status != "completed":
+        run = client.beta.threads.runs.retrieve(thread_id=thread.id, run_id=run.id)
+
+    messages = client.beta.threads.messages.list(thread_id=thread.id)
+
+    logger.info(f"Messages retrieved: {messages}")
+
+    return messages.data[0].content[0].text.value
+
+
 def prompt_gpt_turbo(
     logger,
     client: OpenAI,

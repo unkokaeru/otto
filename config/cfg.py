@@ -6,6 +6,19 @@ from pathlib import Path
 from dotenv import load_dotenv
 from rich.logging import RichHandler
 
+# General Configuration
+USER_NAME = "William"  # Change this to your name
+EXIT_COMMANDS = [
+    "shutdown",
+    "shotdown",
+    "shotsdown",
+    "exit",
+    "quit",
+    "goodbye",
+    "bye",
+    "turnoff",
+]
+
 # Logging Configuration
 LOGGING_CONFIG = {
     "level": "INFO",
@@ -17,6 +30,7 @@ LOGGING_CONFIG = {
 # OpenAI API Configuration
 load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+ASSISTANT_ID = "asst_eBljvhz5O0DCf8n8lLbXkCRT"
 
 # ElevenLabs API Configuration
 ELEVEN_API_KEY = os.getenv("ELEVEN_API_KEY")

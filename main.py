@@ -1,18 +1,23 @@
 """A digital assistant named Otto."""
 
+import re
+
 import speech_recognition as sr
 from openai import OpenAI
 
 from config.cfg import (
+    ASSISTANT_ID,
+    DURATION,
     ELEVEN_API_KEY,
     ELEVEN_VOICE_ID,
+    EXIT_COMMANDS,
     OPENAI_API_KEY,
+    USER_NAME,
     WAKE_WORDS,
-    DURATION,
 )
-from core.speech_recognition import microphone_input, listen_for_wake_words
+from core.speech_recognition import listen_for_wake_words, microphone_input
 from integrations.eleven_labs import text_to_speech
-from integrations.openai import prompt_gpt_turbo, speech_to_text
+from integrations.openai import prompt_assistant, speech_to_text
 from utils.logger import get_logger
 
 
@@ -22,10 +27,11 @@ def main() -> None:
     :return: None
     """
 
-    # Initialise the logger and OpenAI client
+    # Initialise the required objects
     ai_client = OpenAI(api_key=OPENAI_API_KEY)
     logger = get_logger()
     recogniser = sr.Recognizer()
+    thread = ai_client.beta.threads.create()
 
     # Keep the digital assistant running
     while True:
@@ -48,12 +54,14 @@ def main() -> None:
         text = speech_to_text(logger, ai_client, user_audio_path)
 
         # Check if the user wants to shut down the digital assistant
-        if text.lower() == "shut down":
+        if re.sub(r"[^a-z]", "", text.lower()) in EXIT_COMMANDS:
             logger.info("Shutdown command received. Turning off.")
             break  # Break the loop and end the program
 
         # Prompt the ChatGPT API with the transcribed text
-        response = prompt_gpt_turbo(logger, ai_client, text)
+        response = prompt_assistant(
+            logger, ai_client, thread, ASSISTANT_ID, USER_NAME, text
+        )
         logger.info(f"Response: {response}")
 
         # Convert the response to speech
