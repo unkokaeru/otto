@@ -30,7 +30,7 @@ def text_to_speech(
 
     response = requests.post(url, json=data, headers=headers)
 
-    output_path = Path(__file__).parent / "temp/output.mp3"
+    output_path = Path(__file__).parent.parent / "temp/output.mp3"
 
     with open(output_path, "wb") as f:
         for chunk in response.iter_content(chunk_size=CHUNK_SIZE):

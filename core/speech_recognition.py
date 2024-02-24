@@ -26,7 +26,7 @@ def microphone_input(logger) -> Path:
         logger.info("Recording stopped.")
 
     # Set the path to the audio file
-    audio_path = Path(__file__).parent / "temp/input.wav"
+    audio_path = Path(__file__).parent.parent / "temp/input.wav"
 
     # Save the audio data to the specified file
     with open(audio_path, "wb") as f:
