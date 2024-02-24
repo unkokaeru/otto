@@ -1,0 +1,5 @@
+python-dotenv==1.0.1
+rich==12.5.1
+requests==2.31.0
+openai==1.7.1
+SpeechRecognition==3.10.1
