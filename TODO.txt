@@ -1,6 +1,6 @@
 OTTO-TODO:
 
-- continuous conversations until "goodbye"
+- continuous conversations until "goodbye"; migrate to Assistants API
 
 - play audio without default media player
 
