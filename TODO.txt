@@ -1,0 +1,9 @@
+OTTO-TODO:
+
+- continuous conversations until "goodbye"
+
+- play audio without default media player
+
+- wake word implementation
+
+- hardware implementation, perhaps onto my old phone
